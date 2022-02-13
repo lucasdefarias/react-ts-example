@@ -1,0 +1,1 @@
+export default () => <div>Settings page</div>;

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   CurrencyConversion,
   getCurrencyConversionList,
@@ -9,11 +10,13 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
+import { RootState } from '../app/store';
+
 
 
 export default () => {
-  const currency = 'eur';
-  const [list, setList] = useState<CurrencyConversion[]>([]);
+    const currency = useSelector((state: RootState) => state.currency.selectedCurrencyCode);
+    const [list, setList] = useState<CurrencyConversion[]>([]);
 
   useEffect(() => {
     getCurrencyConversionList(currency).then((res) => setList(res));
@@ -35,7 +38,7 @@ export default () => {
           {list.map((currencyInfo) => (
             <TableRow key={currencyInfo.code}>
               <TableCell>{currencyInfo.code.toLocaleUpperCase()}</TableCell>
-              <TableCell align="right">{`$${currencyInfo.conversion}`}</TableCell>
+              <TableCell align="right">{`${currencyInfo.conversion}`}</TableCell>
             </TableRow>
           ))}
         </TableBody>

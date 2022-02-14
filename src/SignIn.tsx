@@ -1,5 +1,4 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
+import React, { useEffect } from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -10,9 +9,32 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import { useNavigate } from "react-router-dom";
+import useAuth from './useAuth';
 
 const SignIn = () => {
-  const handleSubmit = () => {};
+  const auth = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (auth.user) {
+      navigate('dashboard');
+    }
+  }, []);
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    auth.signin({ 
+      email: (data.get('email')?.toString()) || '', 
+      password: (data.get('password')?.toString()) || ''
+    }).then(() => {
+      navigate('dashboard');
+    }).catch(e => {
+      // TODO: Show error
+    });
+  };
+
   return (
     <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -47,10 +69,6 @@ const SignIn = () => {
               type="password"
               id="password"
               autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
             />
             <Button
               type="submit"

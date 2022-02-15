@@ -9,7 +9,7 @@ const AuthGuard = ({ children }: { children: JSX.Element }) => {
   );  
   const location = useLocation();
 
-  if (!loggedUser) {
+  if (!loggedUser?.email) {
     return <Navigate to="/signin" state={{ from: location }} replace />;
   }
 

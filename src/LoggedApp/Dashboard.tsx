@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   CurrencyConversion,
   getCurrencyConversionList,
@@ -10,13 +10,13 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
-import { RootState } from '../app/store';
+import { RootState } from '../store/store';
 
-
-
-export default () => {
-    const currency = useSelector((state: RootState) => state.currency.selectedCurrencyCode);
-    const [list, setList] = useState<CurrencyConversion[]>([]);
+const Dashboard = () => {
+  const currency = useSelector(
+    (state: RootState) => state.currency.selectedCurrencyCode
+  );
+  const [list, setList] = useState<CurrencyConversion[]>([]);
 
   useEffect(() => {
     getCurrencyConversionList(currency).then((res) => setList(res));
@@ -46,3 +46,5 @@ export default () => {
     </>
   );
 };
+
+export default Dashboard;

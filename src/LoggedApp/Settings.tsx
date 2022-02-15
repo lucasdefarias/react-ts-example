@@ -8,11 +8,11 @@ import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateSelected } from '../app/currencySlice';
-import { RootState } from '../app/store';
+import { updateSelected } from '../store/currencySlice';
+import { RootState } from '../store/store';
 
 
-export default () => {
+const Settings = () => {
   const dispatch = useDispatch();
   const currency = useSelector((state: RootState) => state.currency.selectedCurrencyCode);
   const [availableCurrencies, setAvailableCurrencies] = useState<
@@ -67,3 +67,5 @@ export default () => {
     </>
   );
 };
+
+export default Settings;

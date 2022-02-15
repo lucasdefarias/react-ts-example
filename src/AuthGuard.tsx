@@ -1,12 +1,15 @@
 import React from 'react';
 import { useLocation, Navigate } from 'react-router-dom';
-import useAuth from './useAuth';
+import { useSelector } from 'react-redux';
+import { RootState } from './store/store';
 
 const AuthGuard = ({ children }: { children: JSX.Element }) => {
-  let auth = useAuth();
-  let location = useLocation();
+  const loggedUser = useSelector(
+    (state: RootState) => state.user.loggedUser
+  );  
+  const location = useLocation();
 
-  if (!auth.user) {
+  if (!loggedUser) {
     return <Navigate to="/signin" state={{ from: location }} replace />;
   }
 

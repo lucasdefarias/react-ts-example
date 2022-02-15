@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -18,8 +18,10 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { Outlet } from 'react-router';
-import useAuth, { User } from '../useAuth';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
+
 
 const drawerWidth: number = 240;
 
@@ -73,8 +75,11 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 const mdTheme = createTheme();
 
-function DashboardContent({ user, pathname }: { user: User, pathname: string }) {
-  const [open, setOpen] = React.useState(true);
+function DashboardContent({ pathname }: { pathname: string }) {
+  const [open, setOpen] = useState(true);
+  const loggedUser = useSelector(
+    (state: RootState) => state.user.loggedUser
+  );
   const navigate = useNavigate();
   const toggleDrawer = () => {
     setOpen(!open);
@@ -110,7 +115,7 @@ function DashboardContent({ user, pathname }: { user: User, pathname: string }) 
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              { user.name }
+              { loggedUser?.name }
             </Typography>
           </Toolbar>
         </AppBar>
@@ -167,10 +172,9 @@ function DashboardContent({ user, pathname }: { user: User, pathname: string }) 
 
 
 const LoggedApp = () => {
-  const { user } = useAuth();
   const { pathname } = useLocation();
   return (
-    <DashboardContent user={user!} pathname={pathname}/>
+    <DashboardContent pathname={pathname}/>
   );
 };
 

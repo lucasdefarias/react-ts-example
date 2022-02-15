@@ -8,7 +8,7 @@ import Settings from './LoggedApp/Settings';
 import AuthGuard from './AuthGuard';
 import { AuthProvider } from './useAuth';
 import { Provider } from 'react-redux';
-import { store } from './app/store';
+import { store } from './store/store';
 
 
 function App() {

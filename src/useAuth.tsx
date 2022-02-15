@@ -16,8 +16,7 @@ const fakeAuthProvider = {
     return Promise.resolve({ name: 'John Doe', email: credentials.email } as User);
   },
   signout(callback: VoidFunction) {
-    fakeAuthProvider.isAuthenticated = false;
-    setTimeout(callback, 100);
+    // TODO
   }
 };
 
@@ -28,6 +27,13 @@ const AuthContext = createContext<AuthContextType>(
 export interface User {
   email: string;
   name: string;
+}
+
+export interface GithubLoginParams { 
+  code: string, 
+  client_id: string, 
+  client_secret: string, 
+  redirect_uri: string 
 }
 
 export interface SignInCredentials {
